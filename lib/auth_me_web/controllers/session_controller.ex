@@ -31,10 +31,11 @@ defmodule AuthMeWeb.SessionController do
   end
 
   defp login_reply({:ok, user}, conn) do
+    start_page = Application.get_env(:auth_me, :start_page, "/protected")
     conn
     |> put_flash(:info, "Welcome back!")
     |> UserManager.sign_in(user)   #This module's full name is Auth.UserManager.Guardian.Plug,
-    |> redirect(to: "/auth/protected")    #and the arguments specified in the Guardian.Plug.sign_in()
+    |> redirect(to: start_page)    #and the arguments specified in the Guardian.Plug.sign_in()
   end                                #docs are not applicable here.
 
   defp login_reply({:error, reason}, conn) do
@@ -44,9 +45,10 @@ defmodule AuthMeWeb.SessionController do
   end
 
   def logout(conn, _) do
+    login_page = Application.get_env(:auth_me, :login_page, "/login")
     conn
     |> UserManager.sign_out() #This module's full name is Auth.UserManager.Guardian.Plug,
-    |> redirect(to: "/auth/login")   #and the arguments specfied in the Guardian.Plug.sign_out()
+    |> redirect(to: login_page)   #and the arguments specfied in the Guardian.Plug.sign_out()
   end     
 
 end

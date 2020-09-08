@@ -8,7 +8,9 @@
 use Mix.Config
 
 config :auth_me, 
-  ecto_repos: [AuthMe.Repo]
+  ecto_repos: [AuthMe.Repo],
+  start_page: "/auth/protected",
+  login_page: "/auth/login",
 
 # Configures the endpoint
 config :auth_me, AuthMeWeb.Endpoint,

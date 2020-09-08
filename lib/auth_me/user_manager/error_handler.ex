@@ -6,10 +6,11 @@ defmodule AuthMe.UserManager.ErrorHandler do
 
   @impl Guardian.Plug.ErrorHandler
   def auth_error(conn, {type, _reason}, _opts) do
+    login_page = Application.get_env(:auth_me, :login_page, "/login")
     message = to_string(type)
     conn
     |> put_flash(:info, message)
-    |> redirect(to: "/auth/login")  
+    |> redirect(to: login_page)  
     #body = to_string(type)
     #conn
     #|> put_resp_content_type("text/plain")
